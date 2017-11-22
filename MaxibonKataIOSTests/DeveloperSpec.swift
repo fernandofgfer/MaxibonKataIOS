@@ -29,6 +29,14 @@ class DeveloperSpec: XCTestCase {
         }
     }
 
+    func testNameOfTheDeveloperIsTheSameIProvideInTheCreation(){
+        property("NameOfTheDeveloperIsTheSameIProvideInTheCreation") <- forAll(String.arbitrary, pf: { (name: String) -> Testable in
+            let developer = Developer(name: name, numberOfMaxibonsToGet: 0)
+            print(name)
+            return developer.name == name
+        })
+    }
+    
     func testAllHungryDevelopers(){
         property("The developer always take a positive number of Maxibons", arguments: CheckerArguments(maxAllowableSuccessfulTests: 2000)) <- forAll(Developer.arbitraryHungry, pf: { (developer: Developer) -> Testable in
             print(developer.numberOfMaxibonsToGet)
