@@ -22,12 +22,17 @@ class DeveloperSpec: XCTestCase {
         super.tearDown()
     }
     
-    
     func testAll(){
         property("The developer always take a positive number of Maxibons", arguments: CheckerArguments(maxAllowableSuccessfulTests: 2000)) <- forAll { (developer: Developer) in
             print(developer.numberOfMaxibonsToGet)
             return developer.numberOfMaxibonsToGet >= 0
         }
-        
+    }
+
+    func testAllHungryDevelopers(){
+        property("The developer always take a positive number of Maxibons", arguments: CheckerArguments(maxAllowableSuccessfulTests: 2000)) <- forAll(Developer.arbitraryHungry, pf: { (developer: Developer) -> Testable in
+            print(developer.numberOfMaxibonsToGet)
+            return developer.numberOfMaxibonsToGet >= 0
+        })
     }
 }
